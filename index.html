@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nota Técnica Executiva | UMIPI Semiárido RN–PB | Board</title>
+<style>
+:root{
+  /* AZUIS — agora claros (sem azul escuro/marinho) */
+  --azul:#1b7bc4; --azul-claro:#3aa0e6; --azul-esc:#1565a8; --azul-board:#2487cf;
+  /* LARANJA */
+  --laranja:#f47b20; --laranja-claro:#ff9d4d; --laranja-esc:#d9620a;
+  /* VERMELHO CLARO */
+  --vermelho:#ef5a52; --vermelho-claro:#ff7d75; --vermelho-esc:#d6453d;
+  /* VERDES (apoio) */
+  --verde:#1c8f4a; --verde-claro:#38b56a; --verde-esc:#0d5e30;
+  --branco:#ffffff; --cinza:#f6fafd; --cinza2:#e6eef5; --texto:#1d2b3a; --dourado:#f0a92b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;color:var(--texto);background:#eef3f7;line-height:1.6;font-size:15.5px}
+.doc{max-width:1180px;margin:0 auto;background:var(--branco);box-shadow:0 0 40px rgba(0,0,0,.12)}
+
+/* CAPA */
+.capa{background:linear-gradient(120deg,var(--azul-claro) 0%,var(--azul) 38%,var(--laranja) 86%,var(--vermelho-claro) 118%);color:#fff;padding:55px 60px 45px;position:relative}
+.capa .badge{display:inline-block;background:#fff;color:var(--laranja-esc);font-weight:800;font-size:.72rem;letter-spacing:1.5px;padding:5px 14px;border-radius:3px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.capa h1{font-size:2rem;line-height:1.25;font-weight:700;margin-bottom:14px;max-width:850px;text-shadow:0 1px 3px rgba(0,0,0,.18)}
+.capa h1 span{color:#fff2c9}
+.capa .sub{font-size:1.05rem;font-weight:300;max-width:820px;opacity:.97;margin-bottom:22px}
+.capa .meta{display:flex;flex-wrap:wrap;gap:26px;border-top:1px solid rgba(255,255,255,.35);padding-top:18px;font-size:.85rem}
+.capa .meta div span{display:block;opacity:.8;font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.capa .meta div strong{font-size:.92rem;font-weight:600}
+
+/* FAIXA NAV */
+.faixa{background:linear-gradient(90deg,var(--azul) 0%,var(--azul-claro) 100%);padding:0 60px}
+.faixa nav{display:flex;flex-wrap:wrap;gap:0}
+.faixa a{color:#eaf4fd;text-decoration:none;font-size:.78rem;padding:11px 14px;border-bottom:3px solid transparent;transition:.15s}
+.faixa a:hover{color:#fff;border-bottom-color:var(--laranja-claro);background:rgba(255,255,255,.12)}
+
+/* CONTEÚDO */
+.conteudo{padding:0 60px 50px}
+section{padding:36px 0;border-bottom:1px solid var(--cinza2)}
+.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.sec-num{background:linear-gradient(135deg,var(--azul-claro),var(--laranja));color:#fff;width:42px;height:42px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;flex-shrink:0;box-shadow:0 3px 8px rgba(244,123,32,.3)}
+.sec-head h2{font-size:1.5rem;color:var(--azul-esc)}
+.sec-head .tag{margin-left:auto;font-size:.7rem;background:linear-gradient(135deg,var(--laranja),var(--laranja-claro));color:#fff;padding:4px 10px;border-radius:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+h3{color:var(--azul-esc);font-size:1.15rem;margin:24px 0 10px;font-weight:600}
+h4{color:var(--laranja-esc);font-size:1rem;margin:14px 0 6px;font-weight:600}
+p{margin-bottom:12px;text-align:justify}
+ul,ol.li{margin:8px 0 14px 22px}
+li{margin-bottom:5px}
+
+/* KPI BOARD */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px;margin:20px 0}
+.kpi{background:var(--branco);border:1px solid var(--cinza2);border-top:4px solid var(--azul-claro);border-radius:8px;padding:16px 14px;box-shadow:0 3px 10px rgba(0,0,0,.06);transition:.15s}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.kpi.v{border-top-color:var(--verde)}
+.kpi.o{border-top-color:var(--laranja)}
+.kpi.r{border-top-color:var(--vermelho)}
+.kpi .n{font-size:1.6rem;font-weight:700;color:var(--azul-esc);display:block;line-height:1.1}
+.kpi.v .n{color:var(--verde-esc)}
+.kpi.o .n{color:var(--laranja-esc)}
+.kpi.r .n{color:var(--vermelho-esc)}
+.kpi .l{font-size:.76rem;color:#667;margin-top:4px}
+
+/* TABELAS */
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.85rem;border:1px solid var(--cinza2)}
+th{background:linear-gradient(135deg,var(--azul),var(--azul-claro));color:#fff;padding:9px 10px;text-align:left;font-weight:600;font-size:.8rem}
+td{padding:7px 10px;border-bottom:1px solid var(--cinza2)}
+tr:nth-child(even) td{background:var(--cinza)}
+tr:hover td{background:#fff1e6}
+caption{caption-side:bottom;font-size:.74rem;color:#889;text-align:left;padding-top:6px;font-style:italic}
+
+/* CAIXAS */
+.box{border-radius:8px;padding:16px 20px;margin:16px 0;font-size:.92rem}
+.box-azul{background:#eef5fc;border-left:5px solid var(--azul-claro)}
+.box-verde{background:#ecf8f0;border-left:5px solid var(--verde)}
+.box-board{background:linear-gradient(120deg,var(--azul) 0%,var(--azul-claro) 100%);color:#fff;border-left:5px solid var(--laranja);box-shadow:0 4px 14px rgba(27,123,196,.25)}
+.box-board strong{color:#fff2c9}
+.box-alerta{background:#fff3e6;border-left:5px solid var(--laranja)}
+.box-laranja{background:#fff3e6;border-left:5px solid var(--laranja);color:#6b3300}
+.box-laranja strong{color:var(--laranja-esc)}
+.box-vermelho{background:#ffeceb;border-left:5px solid var(--vermelho);color:#6b1a16}
+.box-vermelho strong{color:var(--vermelho-esc)}
+.box h4{margin-top:0}
+
+/* DESTAQUE EXEC */
+.exec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.exec-card{background:var(--cinza);border-radius:8px;padding:16px;border-left:4px solid var(--azul-claro);box-shadow:0 2px 6px rgba(0,0,0,.05)}
+.exec-card:nth-child(2){border-left-color:var(--verde)}
+.exec-card:nth-child(3){border-left-color:var(--laranja)}
+.exec-card:nth-child(4){border-left-color:var(--vermelho)}
+.exec-card h4{margin:0 0 6px}
+.exec-card p{font-size:.85rem;margin:0;text-align:left}
+
+/* SWOT */
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.swot div{border-radius:8px;padding:15px 18px;color:#fff}
+.swot .s{background:linear-gradient(135deg,var(--verde-esc),var(--verde))}
+.swot .w{background:linear-gradient(135deg,var(--vermelho),var(--vermelho-claro))}
+.swot .o{background:linear-gradient(135deg,var(--azul),var(--azul-claro))}
+.swot .t{background:linear-gradient(135deg,var(--laranja-esc),var(--laranja-claro))}
+.swot h4{color:#fff;margin:0 0 8px;font-size:1rem}
+.swot ul{margin-left:16px}.swot li{font-size:.84rem;margin-bottom:4px}
+
+/* DIAMANTE */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.card-d{background:var(--cinza);border:1px solid var(--cinza2);border-top:4px solid var(--azul-claro);border-radius:8px;padding:15px 18px}
+.card-d.vd{border-top-color:var(--laranja)}
+.card-d h4{margin-top:0}.card-d ul{margin-bottom:0}.card-d li{font-size:.85rem}
+
+/* MAPA */
+.mapa{text-align:center;margin:18px 0}
+.mapa img{max-width:100%;border:1px solid var(--cinza2);border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.mapa .cap{font-size:.8rem;color:#778;font-style:italic;margin-top:8px}
+
+/* GOVERNANÇA FLUXO */
+.fluxo{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.fluxo .et{flex:1;min-width:150px;background:var(--cinza);border-radius:8px;padding:14px;border-top:4px solid var(--laranja);position:relative}
+.fluxo .et b{display:block;color:var(--azul-esc);font-size:.9rem;margin-bottom:4px}
+.fluxo .et span{font-size:.8rem;color:#566}
+
+/* DETAILS */
+details{background:var(--cinza);border:1px solid var(--cinza2);border-radius:6px;margin:7px 0;overflow:hidden}
+summary{cursor:pointer;padding:11px 16px;background:linear-gradient(90deg,var(--azul),var(--azul-claro));color:#fff;font-weight:600;font-size:.88rem;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸ ";color:var(--laranja-claro)}
+details[open] summary::before{content:"▾ "}
+details[open] summary{background:linear-gradient(90deg,var(--laranja-esc),var(--laranja))}
+.cont{padding:6px 14px 14px;overflow-x:auto}
+
+.fonte{font-size:.76rem;color:#889;font-style:italic;margin-top:6px}
+.pill{display:inline-block;background:var(--laranja);color:#fff;padding:2px 9px;border-radius:11px;font-size:.74rem;margin:2px}
+.pill.az{background:var(--azul-claro)}
+.pill.vd{background:var(--verde-claro)}
+.pill.vm{background:var(--vermelho-claro)}
+.hl{background:#ffe6cf;color:var(--laranja-esc);font-weight:700;padding:0 5px;border-radius:3px}
+
+footer{background:linear-gradient(120deg,var(--azul),var(--azul-claro));color:#eaf4fd;padding:28px 60px;font-size:.8rem}
+footer strong{color:#fff}
+
+@media(max-width:780px){
+  .capa,.faixa,.conteudo,footer{padding-left:24px;padding-right:24px}
+  .swot,.grid2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+<!-- ===================== CAPA ===================== -->
+<div class="capa">
+  <span class="badge">DOCUMENTO PARA DELIBERAÇÃO DO BOARD</span>
+  <h1>Nota Técnica Executiva — Implantação de uma <span>Unidade Mista de Pesquisa e Inovação (UMIPI)</span> no Semiárido do Rio Grande do Norte, com benefício à Paraíba</h1>
+  <div class="sub">Avaliação gerencial do potencial agropecuário (agrícola, pecuária, aquicultura e extrativismo), proposta de modelo de governança aderente à Norma Embrapa (DD nº 11) e recomendações estratégicas.</div>
+  <div class="meta">
+    <div><span>Sede proposta</span><strong>UFERSA — Mossoró/RN</strong></div>
+    <div><span>Liderança compartilhada</span><strong>Embrapa Mandioca e Fruticultura (BA) · Embrapa Agroindústria Tropical (CE)</strong></div>
+    <div><span>Recorte estratégico</span><strong>Apodi · Mossoró · Baraúna</strong></div>
+    <div><span>Base de dados</span><strong>IBGE — PAM / PPM / PEVS / Cidades@</strong></div>
+  </div>
+</div>
+
+<!-- ===================== NAV ===================== -->
+<div class="faixa">
+  <nav>
+    <a href="#s1">1 · Sumário Executivo</a>
+    <a href="#s2">2 · Contexto</a>
+    <a href="#s3">3 · Agrícola</a>
+    <a href="#s4">4 · Pecuária</a>
+    <a href="#s5">5 · Aquicultura</a>
+    <a href="#s6">6 · Extrativismo</a>
+    <a href="#s7">7 · Diamante de Porter</a>
+    <a href="#s8">8 · ITE Embrapa</a>
+    <a href="#s9">9 · UMIPI</a>
+    <a href="#s10">10 · SWOT/Riscos</a>
+    <a href="#s11">11 · Parcerias</a>
+    <a href="#s12">12 · Governança</a>
+    <a href="#s13">13 · Cidades</a>
+    <a href="#s14">14 · Mapa</a>
+    <a href="#s15">15 · Recomendações</a>
+    <a href="#s16">16 · Anexos</a>
+  </nav>
+</div>
+
+<div class="conteudo">
+
+<!-- ===================== 1 SUMÁRIO EXECUTIVO ===================== -->
+<section id="s1">
+  <div class="sec-head"><div class="sec-num">1</div><h2>Sumário Executivo</h2><span class="tag">Para decisão</span></div>
+
+  <div class="box-board box">
+    <strong>Recomendação ao Board:</strong> Aprovar a constituição da UMIPI sediada na UFERSA (Mossoró/RN), sob liderança compartilhada das Embrapas Mandioca e Fruticultura e Agroindústria Tropical, como instrumento de baixo custo de capital e alto retorno socioeconômico para converter as vantagens comparativas naturais do semiárido em vantagem competitiva sustentável baseada em conhecimento.
+  </div>
+
+  <p>Esta Nota Técnica avalia, em chave gerencial e decisória, a viabilidade e o impacto estratégico da implantação de uma <strong>Unidade Mista de Pesquisa e Inovação (UMIPI)</strong> no Rio Grande do Norte, com transbordamento para a Paraíba. A análise apoia-se nos microdados municipais do IBGE (produção agrícola, pecuária, aquícola e extrativista), nos panoramas socioeconômicos do IBGE Cidades@, no modelo do Diamante de Porter, na Inteligência Territorial Estratégica (ITE) da Embrapa e na Norma de UMIPIs da Embrapa (DD nº 11/2021).</p>
+  <div class="kpis">
+    <div class="kpi"><span class="n">505 mil t</span><span class="l">Melão RN — líder nacional</span></div>
+    <div class="kpi o"><span class="n">31,6 mi kg</span><span class="l">Camarão RN — maior do país</span></div>
+    <div class="kpi v"><span class="n">7,2 mi t</span><span class="l">Cana PB</span></div>
+    <div class="kpi r"><span class="n">Baixa</span><span class="l">Exposição financeira</span></div>
+  </div>
+
+
+  <p>O território configura um <strong>cluster agroindustrial de relevância nacional</strong>. O Rio Grande do Norte é <span class="hl">líder nacional na exportação de melão</span> (≈18,9 mil ha colhidos e 505 mil t), potência em melancia (142,6 mil t), castanha de caju (62,1 mil ha) e banana (214,5 mil t), além da <span class="hl">maior carcinicultura do país</span> (31,6 milhões de kg de camarão). A Paraíba complementa o arranjo com forte base em cana-de-açúcar (7,2 milhões de t), abacaxi (300,9 mil t), banana, mandioca e tilapicultura (4,2 milhões de kg).</p>
+
+  <p>O recorte <strong>Apodi–Mossoró–Baraúna</strong> sintetiza o núcleo dinâmico do oeste potiguar: a Chapada do Apodi e seus perímetros irrigados sustentam fruticultura de exportação e a maior concentração estadual de castanha de caju; Mossoró articula petróleo, sal, fruticultura irrigada de classe mundial (Agrícola Famosa) e carcinicultura; e Baraúna firma-se como polo de melão e melancia de alta produtividade. O cluster dispõe de infraestrutura logística, base científica robusta (UFERSA, UFRN, UFCG, UFPB), empresas-âncora exportadoras e instituições estaduais (EMPARN, EMATER-RN).</p>
+
+  <p>A aplicação do <strong>Diamante de Porter</strong> evidencia um diamante "completo" e auto-reforçado na fruticultura irrigada — condições de fatores favoráveis (clima, solos, água de perímetros), demanda externa sofisticada (Europa, EUA, Oriente Médio com exigência de certificação), indústrias de apoio e rivalidade empresarial intensa. Persistem fragilidades estruturais — déficit hídrico, baixa escolaridade, informalidade, saneamento precário e vulnerabilidade da agricultura familiar — que delimitam o espaço de atuação da UMIPI.</p>
+
+  <p>Sob a <strong>ITE da Embrapa</strong> (quadros natural, agrário, agrícola, infraestrutura e socioeconômico), a UMIPI deve operar como observatório territorial e nó integrador de dados e tecnologias, traduzindo a vocação produtiva em soluções de manejo, sanidade, eficiência hídrica, agregação de valor e inclusão produtiva. O <strong>modelo de governança</strong> proposto observa estritamente a Norma DD nº 11: aliança estratégica sem personalidade jurídica, formalizada por Acordo de Parceria, com Comitê Gestor e Comitê Técnico, Unidade líder da Embrapa e coordenação corporativa da DEPD.</p>
+
+  <p>Os <strong>investimentos diretos da Embrapa são marginais</strong> — a Norma veda transferência de recursos entre parceiros e prevê compartilhamento de infraestrutura instalada (UFERSA), captação via editais e fundações de apoio. A relação custo-benefício é, portanto, altamente favorável.</p>
+
+  <div class="exec-grid">
+    <div class="exec-card"><h4>Aderência estratégica</h4><p>Alta — conecta fruticultura tropical, mandioca/banana, caprinovinocultura, carcinicultura e bioeconomia da Caatinga à missão das Unidades líderes.</p></div>
+    <div class="exec-card"><h4>Exposição financeira</h4><p>Baixa — sem aporte orçamentário entre parceiros; uso de infraestrutura da UFERSA e captação por editais (FNE, Finep, CNPq).</p></div>
+    <div class="exec-card"><h4>Impacto socioeconômico</h4><p>Elevado — competitividade exportadora + inclusão da agricultura familiar e resiliência hídrica/climática.</p></div>
+    <div class="exec-card"><h4>Risco principal</h4><p>Hídrico e climático, mitigável por agenda de PD&I em irrigação de precisão e reúso.</p></div>
+  </div>
+
+  <p><strong>Conclusão.</strong> A UMIPI apresenta elevada aderência estratégica, exposição financeira reduzida e alto potencial de retorno social. Recomenda-se ao Board autorizar a proposição formal à DEPD nos termos da Norma, a indicação da Unidade líder, a celebração do Acordo de Parceria multinível e a definição de uma carteira inicial de 5–7 projetos âncora com metas mensuráveis de produtividade, renda e sustentabilidade para o quadriênio.</p>
+</section>
+
+<!-- ===================== 2 CONTEXTO ===================== -->
+<section id="s2">
+  <div class="sec-head"><div class="sec-num">2</div><h2>Contexto Territorial — RN &amp; PB</h2><span class="tag">Diagnóstico</span></div>
+  <div class="kpis">
+    <div class="kpi"><span class="n">3,30 mi</span><span class="l">População RN (2022)</span></div>
+    <div class="kpi o"><span class="n">3,97 mi</span><span class="l">População PB (2022)</span></div>
+    <div class="kpi"><span class="n">167</span><span class="l">Municípios RN</span></div>
+    <div class="kpi o"><span class="n">223</span><span class="l">Municípios PB</span></div>
+    <div class="kpi"><span class="n">0,728</span><span class="l">IDH RN (2021)</span></div>
+    <div class="kpi o"><span class="n">0,698</span><span class="l">IDH PB (2021)</span></div>
+  </div>
+  <p>Os dois estados compartilham o bioma <strong>Caatinga</strong>, clima semiárido e desafios estruturais comuns — rendimento domiciliar per capita modesto (R$ 1.819 no RN; R$ 1.543 na PB), elevada informalidade e dependência de transferências. Ao mesmo tempo, ostentam ilhas de competitividade agroindustrial de relevância nacional, com perfis complementares: o RN combina o agro de exportação do oeste potiguar (fruticultura irrigada) e a faixa litorânea (cana, coco, carcinicultura); a PB destaca-se na Zona da Mata (cana, abacaxi), no Brejo (banana, café) e no Cariri/Sertão (caprinovinocultura).</p>
+  <div class="box box-azul">
+    <strong>Racional do arranjo bi-estadual.</strong> A complementaridade produtiva — fruticultura/carcinicultura no RN e cana/abacaxi/caprinovinocultura no semiárido paraibano — permite que a UMIPI gere transbordamentos tecnológicos para microrregiões contíguas da PB (Sertão, Cariri, Curimataú), ampliando escala, escopo e retorno social dos investimentos em PD&I.
+  </div>
+</section>
+
+<!-- ===================== 3 AGRÍCOLA ===================== -->
+<section id="s3">
+  <div class="sec-head"><div class="sec-num">3</div><h2>Dimensão Agrícola</h2><span class="tag">Vocação</span></div>
+  <h3>3.1 Panorama estadual</h3>
+  <table>
+    <tr><th>Cultura</th><th>RN — Área (ha)</th><th>RN — Produção (t)</th><th>PB — Área (ha)</th><th>PB — Produção (t)</th></tr>
+    <tr><td>Melão</td><td>18.930</td><td>505.212</td><td>24</td><td>440</td></tr>
+    <tr><td>Melancia</td><td>6.762</td><td>142.614</td><td>279</td><td>5.509</td></tr>
+    <tr><td>Castanha de caju</td><td>62.128</td><td>20.546</td><td>2.085</td><td>488</td></tr>
+    <tr><td>Banana (cacho)</td><td>8.383</td><td>214.472</td><td>10.812</td><td>145.055</td></tr>
+    <tr><td>Mandioca</td><td>24.832</td><td>276.245</td><td>16.121</td><td>164.972</td></tr>
+    <tr><td>Cana-de-açúcar</td><td>64.398</td><td>3.858.316</td><td>110.961</td><td>7.181.745</td></tr>
+    <tr><td>Abacaxi*</td><td>2.517</td><td>64.729</td><td>9.419</td><td>300.903</td></tr>
+    <tr><td>Feijão (grão)</td><td>34.952</td><td>13.701</td><td>78.451</td><td>19.119</td></tr>
+    <tr><td>Milho (grão)</td><td>46.837</td><td>22.696</td><td>96.179</td><td>47.842</td></tr>
+    <tr><td>Coco-da-baía*</td><td>18.289</td><td>164.555</td><td>7.172</td><td>83.532</td></tr>
+    <caption>Fonte: IBGE — PAM (Agrícola RN/PB). *Abacaxi e coco em mil frutos.</caption>
+  </table>
+  <div class="box box-verde">
+    <strong>Leitura competitiva.</strong> RN hegemônico em <span class="pill">melão</span><span class="pill">melancia</span><span class="pill">castanha de caju</span> (cadeias tecnificadas e exportadoras). PB líder em <span class="pill az">cana</span><span class="pill az">abacaxi</span> com forte base de <span class="pill az">banana</span> e <span class="pill az">mandioca</span> (mercado interno e agroindústria). Essa complementaridade é o alicerce da agenda integrada de PD&I.
+  </div>
+  <h3>3.2 Destaques municipais — Núcleo Apodi / Mossoró / Baraúna (área colhida, ha)</h3>
+  <table>
+    <tr><th>Município</th><th>Castanha caju</th><th>Melão</th><th>Melancia</th><th>Banana</th><th>Feijão</th><th>Mandioca</th></tr>
+    <tr><td><strong>Apodi</strong></td><td>11.000</td><td>2.000</td><td>865</td><td>500</td><td>250</td><td>15</td></tr>
+    <tr><td><strong>Mossoró</strong></td><td>1.850</td><td>8.300</td><td>2.500</td><td>15</td><td>3.200</td><td>50</td></tr>
+    <tr><td><strong>Baraúna</strong></td><td>200</td><td>3.100</td><td>350</td><td>400</td><td>300</td><td>80</td></tr>
+    <caption>Fonte: IBGE — Agrícola Cidades RN.</caption>
+  </table>
+  <p>Os três municípios concentram o <strong>cinturão da fruticultura irrigada de exportação</strong> do RN, com produtividade de melão superior a 30 t/ha em sistemas tecnificados — patamar de classe mundial. Apodi combina a maior área de castanha de caju do recorte com fruticultura emergente nos perímetros irrigados (Santa Cruz do Apodi).</p>
+  <h3>3.3 Principais municípios produtores — além do núcleo</h3>
+  <p>Para além de Apodi, Mossoró e Baraúna, a produção agrícola distribui-se por importantes polos no litoral e no agreste, conforme os microdados municipais do IBGE (quantidade produzida, 2024).</p>
+  <div class="box box-laranja"><strong>Leitura gerencial.</strong> O <span class="hl">melão</span> concentra-se em Mossoró, Baraúna, Tibau e Apodi (cinturão de exportação); a <span class="hl">cana</span> domina o litoral sul (Canguaretama, Baía Formosa, Arês); a <span class="hl">bananicultura</span> firma-se no Vale do Açu (Alto do Rodrigues, Ipanguaçu) e a <span class="hl">mandioca</span> no litoral leste (Vera Cruz, Pureza, Touros).</div>
+  <h4>Rio Grande do Norte — maiores produtores por cultura (t)</h4>
+  <table>
+    <tr><th>Cultura</th><th>Maior produtor</th><th>Produção</th><th>Demais municípios de destaque</th></tr>
+    <tr><td><strong>Melão</strong></td><td>Mossoró</td><td>218.373</td><td>Baraúna (93.000) · Tibau (75.645) · Apodi (61.502)</td></tr>
+    <tr><td><strong>Melancia</strong></td><td>Mossoró</td><td>70.000</td><td>Apodi (21.654) · Upanema (14.360) · Baraúna (10.280)</td></tr>
+    <tr><td><strong>Cana-de-açúcar</strong></td><td>Canguaretama</td><td>892.480</td><td>Baía Formosa (660.000) · Arês (463.382) · Goianinha (388.719)</td></tr>
+    <tr><td><strong>Banana</strong></td><td>Alto do Rodrigues</td><td>40.960</td><td>Rio do Fogo (25.650) · Ipanguaçu (25.615) · Ceará-Mirim (23.000)</td></tr>
+    <tr><td><strong>Mandioca</strong></td><td>Vera Cruz</td><td>51.200</td><td>Pureza (28.024) · Touros (26.744) · Macaíba (20.400)</td></tr>
+    <tr><td><strong>Castanha de caju</strong></td><td>Serra do Mel</td><td>7.000</td><td>Apodi (3.300) · Severiano Melo (1.928) · Cerro Corá (1.500)</td></tr>
+    <caption>Fonte: IBGE — PAM / Agrícola Cidades RN (quantidade produzida, t; castanha de caju em t).</caption>
+  </table>
+  <h4>Paraíba — maiores produtores por cultura (t)</h4>
+  <table>
+    <tr><th>Cultura</th><th>Maior produtor</th><th>Produção</th><th>Demais municípios de destaque</th></tr>
+    <tr><td><strong>Cana-de-açúcar</strong></td><td>Pedras de Fogo</td><td>1.144.000</td><td>Santa Rita (955.500) · Sapé (663.000) · Rio Tinto (637.000)</td></tr>
+    <tr><td><strong>Abacaxi*</strong></td><td>Pedras de Fogo</td><td>68.400</td><td>Itapororoca (60.000) · Araçagi (48.000) · Santa Rita (31.500)</td></tr>
+    <tr><td><strong>Banana</strong></td><td>Pilões</td><td>23.100</td><td>Bananeiras (21.000) · Alagoa Nova (21.000) · Areia (10.800)</td></tr>
+    <tr><td><strong>Mandioca</strong></td><td>Mari</td><td>21.200</td><td>Pitimbu (16.014) · Pedras de Fogo (12.600) · Alhandra (7.320)</td></tr>
+    <tr><td><strong>Coco-da-baía*</strong></td><td>Lucena</td><td>21.422</td><td>Santa Rita (18.200) · Pitimbu (10.600) · Mamanguape (6.480)</td></tr>
+    <tr><td><strong>Milho</strong></td><td>Araruna</td><td>2.400</td><td>Sousa (2.352) · Itatuba (1.600) · Tacima (1.500)</td></tr>
+    <caption>Fonte: IBGE — PAM / Agrícola Cidades PB. *Abacaxi e coco em mil frutos.</caption>
+  </table>
+
+</section>
+
+<!-- ===================== 4 PECUÁRIA ===================== -->
+<section id="s4">
+  <div class="sec-head"><div class="sec-num">4</div><h2>Dimensão Pecuária</h2><span class="tag">Inclusão &amp; escala</span></div>
+  <div class="kpis">
+    <div class="kpi"><span class="n">1,38 mi</span><span class="l">Bovinos RN</span></div>
+    <div class="kpi o"><span class="n">669 mil</span><span class="l">Caprinos RN</span></div>
+    <div class="kpi v"><span class="n">792 mil</span><span class="l">Ovinos RN</span></div>
+    <div class="kpi r"><span class="n">12,7 mi</span><span class="l">Galináceos RN</span></div>
+    <div class="kpi"><span class="n">849 mil</span><span class="l">Caprinos PB</span></div>
+    <div class="kpi o"><span class="n">842 mil</span><span class="l">Ovinos PB</span></div>
+  </div>
+  <p>A <strong>caprinovinocultura</strong> é traço identitário do semiárido, com forte vocação para inclusão social e resiliência à seca, justificando articulação direta com a Embrapa Caprinos e Ovinos. A avicultura industrial é expressiva (12,7 mi de galináceos no RN; 14,5 mi na PB).</p>
+  <table>
+    <tr><th>Município</th><th>Bovino</th><th>Caprino</th><th>Ovino</th><th>Suíno (total)</th><th>Galináceos</th></tr>
+    <tr><td><strong>Mossoró</strong></td><td>24.000</td><td>34.500</td><td>18.000</td><td>22.500</td><td>2.000.000</td></tr>
+    <tr><td><strong>Apodi</strong></td><td>23.000</td><td>50.500</td><td>42.000</td><td>13.000</td><td>190.000</td></tr>
+    <tr><td><strong>Baraúna</strong></td><td>7.020</td><td>8.930</td><td>3.300</td><td>4.900</td><td>25.800</td></tr>
+    <caption>Fonte: IBGE — PPM (Pecuária Cidades RN).</caption>
+  </table>
+  <p>Apodi lidera o rebanho caprino e ovino do recorte (50,5 mil e 42 mil cabeças); Mossoró concentra avicultura industrial relevante. A pecuária regional demanda PD&I em forragicultura adaptada, sanidade, melhoramento genético e cadeias de leite e carne caprina/ovina.</p>
+  <h3>4.1 Principais municípios criadores — além do núcleo</h3>
+  <p>O efetivo dos rebanhos extrapola amplamente o núcleo Apodi/Mossoró/Baraúna, com forte presença no Seridó, no Oeste e no Cariri paraibano (IBGE — PPM, cabeças, 2024).</p>
+  <div class="box box-laranja"><strong>Leitura gerencial.</strong> A <span class="hl">caprinovinocultura</span> tem seus maiores plantéis em Apodi e Açu (RN) e em Monteiro e Sumé (Cariri/PB); a <span class="hl">avicultura industrial</span> concentra-se em Santa Cruz e Mossoró (RN) e em Pocinhos, Pedras de Fogo e Guarabira (PB).</div>
+  <h4>Rio Grande do Norte — maiores rebanhos (cabeças)</h4>
+  <table>
+    <tr><th>Rebanho</th><th>Maior criador</th><th>Efetivo</th><th>Demais municípios de destaque</th></tr>
+    <tr><td><strong>Bovino</strong></td><td>Caicó</td><td>48.922</td><td>Santana do Matos (33.000) · Nova Cruz (33.000) · Santo Antônio (32.700)</td></tr>
+    <tr><td><strong>Caprino</strong></td><td>Apodi</td><td>50.500</td><td>Santana do Matos (50.000) · Pedro Avelino (34.850) · Mossoró (34.500)</td></tr>
+    <tr><td><strong>Ovino</strong></td><td>Açu</td><td>54.571</td><td>Campo Grande (42.005) · Apodi (42.000) · Santana do Matos (40.000)</td></tr>
+    <tr><td><strong>Galináceos</strong></td><td>Santa Cruz</td><td>2.340.000</td><td>Mossoró (2.000.000) · Macaíba (1.200.000) · São José de Mipibu (1.082.671)</td></tr>
+    <caption>Fonte: IBGE — PPM / Pecuária Cidades RN (efetivo, cabeças).</caption>
+  </table>
+  <h4>Paraíba — maiores rebanhos (cabeças)</h4>
+  <table>
+    <tr><th>Rebanho</th><th>Maior criador</th><th>Efetivo</th><th>Demais municípios de destaque</th></tr>
+    <tr><td><strong>Bovino</strong></td><td>Pombal</td><td>29.280</td><td>Sousa (26.887) · Paulista (25.742) · Piancó (20.703)</td></tr>
+    <tr><td><strong>Caprino</strong></td><td>Monteiro</td><td>40.123</td><td>Sumé (31.636) · São João do Tigre (30.405) · Serra Branca (30.079)</td></tr>
+    <tr><td><strong>Ovino</strong></td><td>Sumé</td><td>32.310</td><td>Monteiro (29.654) · Barra de São Miguel (25.000) · Barra de Santa Rosa (25.000)</td></tr>
+    <tr><td><strong>Galináceos</strong></td><td>Pocinhos</td><td>1.250.000</td><td>Pedras de Fogo (1.132.509) · Guarabira (1.120.000) · Mamanguape (936.878)</td></tr>
+    <caption>Fonte: IBGE — PPM / Pecuária Cidades PB (efetivo, cabeças).</caption>
+  </table>
+
+</section>
+
+<!-- ===================== 5 AQUICULTURA ===================== -->
+<section id="s5">
+  <div class="sec-head"><div class="sec-num">5</div><h2>Dimensão Aquícola</h2><span class="tag">Liderança nacional</span></div>
+  <div class="box box-azul"><strong>RN — Potência nacional em carcinicultura.</strong> Produção estadual de <span class="hl">31,62 milhões de kg de camarão</span>, 2,30 milhões de kg de tilápia e 10,73 milhões de milheiros de larvas/pós-larvas. PB com perfil voltado à <span class="hl">tilapicultura (4,25 milhões de kg)</span> e carcinicultura (8,87 milhões de kg).</div>
+  <table>
+    <tr><th>Produto</th><th>RN</th><th>PB</th></tr>
+    <tr><td>Camarão (kg)</td><td>31.620.945</td><td>8.869.300</td></tr>
+    <tr><td>Tilápia (kg)</td><td>2.297.962</td><td>4.249.395</td></tr>
+    <tr><td>Larvas/pós-larvas de camarão (milheiros)</td><td>10.730.818</td><td>185.400</td></tr>
+    <tr><td>Ostras, vieiras e mexilhões (kg)</td><td>125.000</td><td>23.000</td></tr>
+    <tr><td>Tambaqui / Curimatã (kg)</td><td>221.670 / 204.554</td><td>12.856 / 300</td></tr>
+    <caption>Fonte: IBGE — Produção da Aquicultura (RN/PB).</caption>
+  </table>
+  <p>Municípios estuarinos do RN (Pendências, Canguaretama, Arês, Guamaré, Macau, Mossoró) lideram a carcinicultura; em Mossoró, 2,2 milhões de kg. Na PB, destacam-se Mari, São Miguel de Taipu, Mogeiro e Itatuba na tilapicultura. Demanda-se PD&I em sanidade aquícola, genética, nutrição e sistemas de bioflocos com menor pegada hídrica e ambiental.</p>
+  <h3>5.1 Principais municípios produtores — além do núcleo</h3>
+  <p>A carcinicultura concentra-se nos estuários do litoral e do Vale do Açu; a tilapicultura, em açudes e barragens do interior (IBGE — Produção da Aquicultura, kg, 2024).</p>
+  <div class="box box-laranja"><strong>Leitura gerencial.</strong> Pendências responde sozinha por <span class="hl">9,6 milhões de kg de camarão</span> no RN; na PB, João Pessoa e São Miguel de Taipu lideram a carcinicultura, enquanto a <span class="hl">tilápia</span> tem em Mari (PB) e Nísia Floresta (RN) seus maiores polos.</div>
+  <h4>Rio Grande do Norte — maiores produtores (kg)</h4>
+  <table>
+    <tr><th>Produto</th><th>Maior produtor</th><th>Produção</th><th>Demais municípios de destaque</th></tr>
+    <tr><td><strong>Camarão</strong></td><td>Pendências</td><td>9.608.000</td><td>Arês (3.500.000) · Canguaretama (3.200.000) · Sen. Georgino Avelino (2.800.000) · Guamaré (2.299.122)</td></tr>
+    <tr><td><strong>Tilápia</strong></td><td>Nísia Floresta</td><td>800.000</td><td>Lagoa de Pedras (295.000) · Sen. Georgino Avelino (230.000) · Canguaretama (125.000)</td></tr>
+    <caption>Fonte: IBGE — Aquicultura Cidades RN (produção, kg).</caption>
+  </table>
+  <h4>Paraíba — maiores produtores (kg)</h4>
+  <table>
+    <tr><th>Produto</th><th>Maior produtor</th><th>Produção</th><th>Demais municípios de destaque</th></tr>
+    <tr><td><strong>Camarão</strong></td><td>João Pessoa</td><td>1.800.000</td><td>S. Miguel de Taipu (1.000.000) · Santa Rita (980.000) · Mogeiro (880.000)</td></tr>
+    <tr><td><strong>Tilápia</strong></td><td>Mari</td><td>1.000.000</td><td>Bananeiras (825.000) · Riachão do Poço (398.750) · Mamanguape (350.000)</td></tr>
+    <caption>Fonte: IBGE — Aquicultura Cidades PB (produção, kg).</caption>
+  </table>
+
+</section>
+
+<!-- ===================== 6 EXTRATIVISMO ===================== -->
+<section id="s6">
+  <div class="sec-head"><div class="sec-num">6</div><h2>Dimensão Extrativista</h2><span class="tag">Bioeconomia</span></div>
+  <table>
+    <tr><th>Produto</th><th>RN</th><th>PB</th></tr>
+    <tr><td>Alimentícios — total (t)</td><td>1.436</td><td>4.012</td></tr>
+    <tr><td>Umbu / Mangaba (t)</td><td>692 / 641</td><td>2.302 / 914</td></tr>
+    <tr><td>Castanha-de-caju extrativa (t)</td><td>65</td><td>310</td></tr>
+    <tr><td>Carnaúba — pó (t)</td><td>420</td><td>15</td></tr>
+    <tr><td>Carvão vegetal (t)</td><td>3.334</td><td>984</td></tr>
+    <tr><td>Lenha (m³)</td><td>1.124.485</td><td>713.824</td></tr>
+    <caption>Fonte: IBGE — PEVS (Extrativismo RN/PB).</caption>
+  </table>
+  <p>Ativos da sociobiodiversidade da Caatinga — <strong>umbu, mangaba, carnaúba e caju</strong> — com potencial de agregação de valor (polpas, óleos, ceras, cosméticos) e inclusão da agricultura familiar. A carnaúba é relevante no RN (Açu, Apodi, Ipanguaçu, Felipe Guerra). A energia de biomassa revela pressão sobre a vegetação nativa, demandando manejo florestal sustentável.</p>
+  <h3>6.1 Principais municípios produtores — além do núcleo</h3>
+  <p>O extrativismo vegetal mapeia a sociobiodiversidade da Caatinga e do litoral (IBGE — PEVS, 2024).</p>
+  <div class="box box-laranja"><strong>Leitura gerencial.</strong> O <span class="hl">umbu</span> destaca-se no Seridó paraibano (Juazeirinho, São Vicente do Seridó); a <span class="hl">mangaba</span> no litoral (Nísia Floresta/RN, Rio Tinto/PB); a <span class="hl">carnaúba</span> no Vale do Açu (Ipanguaçu, Apodi); e a <span class="hl">lenha</span> pressiona o oeste potiguar (Caraúbas, Alexandria).</div>
+  <h4>Rio Grande do Norte — maiores produtores</h4>
+  <table>
+    <tr><th>Produto</th><th>Maior produtor</th><th>Produção</th><th>Demais municípios de destaque</th></tr>
+    <tr><td><strong>Umbu (t)</strong></td><td>São Miguel do Gostoso</td><td>185</td><td>Pedra Grande (100) · São Bento do Norte (74) · Caiçara do Norte (58)</td></tr>
+    <tr><td><strong>Mangaba (t)</strong></td><td>Nísia Floresta</td><td>526</td><td>Pureza (52) · Ceará-Mirim (36) · Maxaranguape (11)</td></tr>
+    <tr><td><strong>Carnaúba — pó (t)</strong></td><td>Ipanguaçu</td><td>88</td><td>Apodi (80) · Upanema (60) · Açu (57)</td></tr>
+    <tr><td><strong>Lenha (m³)</strong></td><td>Caraúbas</td><td>230.000</td><td>Alexandria (114.000) · Santa Cruz (104.020) · Guamaré (52.000)</td></tr>
+    <caption>Fonte: IBGE — PEVS / Extrativismo Cidades RN.</caption>
+  </table>
+  <h4>Paraíba — maiores produtores</h4>
+  <table>
+    <tr><th>Produto</th><th>Maior produtor</th><th>Produção</th><th>Demais municípios de destaque</th></tr>
+    <tr><td><strong>Umbu (t)</strong></td><td>Juazeirinho</td><td>450</td><td>São Vicente do Seridó (422) · Olivedos (350) · Taperoá (182)</td></tr>
+    <tr><td><strong>Mangaba (t)</strong></td><td>Rio Tinto</td><td>305</td><td>Baía da Traição (285) · Marcação (180) · Conde (120)</td></tr>
+    <tr><td><strong>Lenha (m³)</strong></td><td>São Domingos do Cariri</td><td>31.010</td><td>Olho d'Água (25.999) · Juazeirinho (25.000) · Taperoá (19.450)</td></tr>
+    <tr><td><strong>Carvão vegetal (t)</strong></td><td>Emas</td><td>61</td><td>Picuí (50) · Coxixola (29) · Cuité (28)</td></tr>
+    <caption>Fonte: IBGE — PEVS / Extrativismo Cidades PB.</caption>
+  </table>
+
+</section>
+
+<!-- ===================== 7 PORTER ===================== -->
+<section id="s7">
+  <div class="sec-head"><div class="sec-num">7</div><h2>Análise Competitiva — Diamante de Porter</h2><span class="tag">Estratégia</span></div>
+  <p>O modelo de Michael Porter (<em>The Competitive Advantage of Nations</em>, HBR, 1990) explica a sustentação de vantagem competitiva em clusters territoriais a partir de quatro determinantes inter-relacionados, somados ao papel do Governo e do Acaso.</p>
+  <div class="grid2">
+    <div class="card-d"><h4>① Condições de Fatores</h4><ul>
+      <li><strong>Naturais:</strong> alta luminosidade e baixa umidade (favoráveis ao °Brix do melão/melancia), solos da Chapada do Apodi e água dos perímetros irrigados.</li>
+      <li><strong>Avançados:</strong> UFERSA, UFRN, IFRN, EMPARN; mão de obra com expertise em fruticultura irrigada.</li>
+      <li><strong>Restrição-chave:</strong> escassez hídrica e baixa escolaridade média.</li>
+    </ul></div>
+    <div class="card-d vd"><h4>② Condições de Demanda</h4><ul>
+      <li>Demanda externa <strong>sofisticada</strong> (Europa, EUA, Canadá, Oriente Médio) com exigência de certificação e rastreabilidade.</li>
+      <li>Pressão por qualidade eleva o padrão tecnológico de todo o cluster.</li>
+      <li>Demanda interna crescente por proteína caprina/ovina e pescado.</li>
+    </ul></div>
+    <div class="card-d"><h4>③ Indústrias Correlatas e de Apoio</h4><ul>
+      <li>Logística refrigerada, embalagens, insumos e irrigação por gotejamento; <em>packing houses</em>.</li>
+      <li><strong>Lacuna:</strong> agregação de valor (processamento) e P&D local ainda incipientes — espaço natural da UMIPI.</li>
+    </ul></div>
+    <div class="card-d vd"><h4>④ Estratégia, Estrutura e Rivalidade</h4><ul>
+      <li>Coexistência de <strong>players exportadores</strong> (Agrícola Famosa, Favorita, Crop Agrícola) e ampla agricultura familiar.</li>
+      <li>Rivalidade saudável impulsiona produtividade e inovação.</li>
+      <li><strong>Risco:</strong> dualidade competitiva — concentração x exclusão da pequena produção.</li>
+    </ul></div>
+  </div>
+  <div class="box box-alerta"><strong>Governo &amp; Acaso.</strong> Políticas de irrigação (DNOCS), crédito (FNE/BNB, Pronaf), defesa agropecuária (MAPA) e ATER (EMATER-RN) moldam o ambiente competitivo. Choques climáticos (secas, El Niño) e sanitários (mancha-aquosa; vírus em camarão) reforçam a necessidade de PD&I territorial permanente.</div>
+  <p><strong>Conclusão Porter.</strong> O diamante é "completo" e auto-reforçado na fruticultura irrigada, com vantagem competitiva de base nacional/global. A UMIPI atua nos elos mais frágeis — fatores avançados (P&D, qualificação), indústrias de apoio (agregação de valor) e inclusão da pequena produção —, convertendo vantagem comparativa (natureza) em vantagem competitiva (conhecimento).</p>
+  <p class="fonte">Referências: Porter (1990), HBR; "Diamante de Porter" (Wikipédia); estudos UFERSA sobre competitividade no RN.</p>
+</section>
+
+<!-- ===================== 8 ITE ===================== -->
+<section id="s8">
+  <div class="sec-head"><div class="sec-num">8</div><h2>Inteligência Territorial Estratégica (ITE – Embrapa)</h2><span class="tag">Método</span></div>
+  <p>A ITE integra <em>big data</em>, mapas e indicadores em cinco dimensões para subsidiar planejamento, políticas públicas e tomada de decisão no agronegócio. Aplicação ao território RN/PB:</p>
+  <table>
+    <tr><th>Dimensão ITE</th><th>Diagnóstico do território</th><th>Aplicação pela UMIPI</th></tr>
+    <tr><td><strong>Quadro Natural</strong></td><td>Caatinga; semiárido; alta insolação; déficit hídrico; solos da chapada e aluviões; Sistema Costeiro-Marinho (Mossoró pertence).</td><td>Zoneamento agroclimático, monitoramento de água/solo, agricultura de precisão, adaptação climática.</td></tr>
+    <tr><td><strong>Quadro Agrário</strong></td><td>Dualidade empresas exportadoras × agricultura familiar/assentamentos; perímetros irrigados públicos.</td><td>Inteligência fundiária, inclusão produtiva, regularização/CAR, modelos de cooperação.</td></tr>
+    <tr><td><strong>Quadro Agrícola</strong></td><td>Cadeias âncora: melão, melancia, banana, caju, mandioca, cana, abacaxi; caprinovinocultura; carcinicultura.</td><td>Aptidão, produtividade, sanidade, melhoramento e transferência de tecnologia por cadeia.</td></tr>
+    <tr><td><strong>Infraestrutura</strong></td><td>Rodovias (BR-304/405/110), perímetros irrigados, <em>packing houses</em>; gargalos em armazenagem e energia rural.</td><td>Mapeamento logístico, eficiência energética, irrigação inteligente, silos.</td></tr>
+    <tr><td><strong>Socioeconômico</strong></td><td>IDH 0,72 (RN) / 0,70 (PB); renda modesta; informalidade; baixa cobertura de esgoto.</td><td>Painéis de renda/emprego e ITE para priorização de políticas e investimentos.</td></tr>
+  </table>
+  <div class="box box-verde">A UMIPI deve operar como <strong>observatório territorial</strong> (à semelhança do Centro de Inteligência e Mercado da Embrapa Caprinos e Ovinos), gerando dashboards, cenários e recomendações georreferenciadas que orientem produtores, ATER e gestores públicos do RN e da PB.</div>
+</section>
+
+<!-- ===================== 9 UMIPI ===================== -->
+<section id="s9">
+  <div class="sec-head"><div class="sec-num">9</div><h2>Atuação da UMIPI e Unidades da Embrapa</h2><span class="tag">Proposta</span></div>
+  <p>Conforme a Norma da Embrapa (DD nº 11/2021), a UMIPI é uma <strong>aliança estratégica sem personalidade jurídica</strong>, formalizada por Acordo de Parceria, voltada ao atendimento de necessidades regionais/territoriais e à resolução de desafios de PD&I específicos e temporários, mediante compartilhamento de infraestrutura, competências e captação de recursos — sem transferência orçamentária entre parceiros.</p>
+
+  <h3>9.1 Liderança compartilhada</h3>
+  <div class="grid2">
+    <div class="card-d"><h4>Embrapa Mandioca e Fruticultura (Cruz das Almas/BA)</h4><p style="font-size:.85rem">Líder em PD&I de <strong>mandioca, banana e abacaxi</strong> — fortes em Apodi (mandioca/banana) e na PB (abacaxi, banana, mandioca). Aporta germoplasma, manejo e material propagativo.</p></div>
+    <div class="card-d vd"><h4>Embrapa Agroindústria Tropical (Fortaleza/CE)</h4><p style="font-size:.85rem">Referência em <strong>fruticultura tropical e processamento</strong> (melão, melancia, caju, maracujá) — aderente ao núcleo exportador Mossoró/Baraúna/Apodi. Aporta agregação de valor e qualidade pós-colheita.</p></div>
+  </div>
+
+  <h3>9.2 Unidades da Embrapa potencialmente partícipes</h3>
+  <table>
+    <tr><th>Unidade</th><th>Aderência à produção regional</th></tr>
+    <tr><td>Embrapa Semiárido (Petrolina/PE)</td><td>Fruticultura irrigada, manejo de água, convivência com a seca — núcleo técnico do semiárido.</td></tr>
+    <tr><td>Embrapa Caprinos e Ovinos (Sobral/CE)</td><td>Caprinovinocultura (Apodi, Cariri/Sertão PB); modelo de Centro de Inteligência e Mercado (ITE).</td></tr>
+    <tr><td>Embrapa Agroindústria Tropical (CE)</td><td>Melão, melancia, caju, processamento e pós-colheita (co-líder).</td></tr>
+    <tr><td>Embrapa Mandioca e Fruticultura (BA)</td><td>Mandioca, banana, abacaxi (co-líder).</td></tr>
+    <tr><td>Embrapa Solos (UEP Recife)</td><td>Levantamento e manejo de solos da chapada e aluviões; aptidão agrícola.</td></tr>
+    <tr><td>Embrapa Meio Ambiente</td><td>Sustentabilidade de perímetros irrigados, água, resíduos, carbono.</td></tr>
+    <tr><td>Embrapa Hortaliças</td><td>Olericultura irrigada (tomate, cebola) no Cariri/Curimataú.</td></tr>
+    <tr><td>Embrapa Algodão (Campina Grande/PB)</td><td>Algodão, sisal, gergelim — ponte natural com a PB.</td></tr>
+    <tr><td>Embrapa Pesca e Aquicultura</td><td>Carcinicultura e tilapicultura (sanidade, genética, bioflocos).</td></tr>
+    <tr><td>Embrapa Agroenergia / Agrobiologia</td><td>Biomassa, fixação biológica de nitrogênio, bioinsumos.</td></tr>
+  </table>
+
+  <h3>9.3 Carteira inicial de PD&I (eixos)</h3>
+  <ol class="li">
+    <li><strong>Fruticultura tropical irrigada competitiva e sustentável</strong> — produtividade, qualidade, sanidade, uso eficiente da água, certificação.</li>
+    <li><strong>Resiliência hídrica e climática</strong> — reúso, dessalinização, irrigação de precisão, sensoriamento remoto.</li>
+    <li><strong>Caprinovinocultura e forragicultura</strong> — genética, nutrição com plantas da Caatinga, sanidade, cadeias de leite/carne.</li>
+    <li><strong>Mandiocultura e bananicultura</strong> — variedades, manejo, processamento, inclusão familiar.</li>
+    <li><strong>Carcinicultura/tilapicultura sustentável</strong> — biossegurança, bioflocos, redução de impacto estuarino.</li>
+    <li><strong>Sociobiodiversidade da Caatinga</strong> — umbu, mangaba, carnaúba, caju: bioeconomia e agregação de valor.</li>
+    <li><strong>Inteligência Territorial Estratégica</strong> — observatório de dados e apoio a políticas.</li>
+  </ol>
+
+  <h3>9.4 Principais desafios</h3>
+  <ul>
+    <li>Conciliar a agenda do agro exportador de alta tecnologia com a inclusão da agricultura familiar.</li>
+    <li>Assegurar captação estável de recursos via editais e fundações de apoio (Norma veda aporte direto entre parceiros).</li>
+    <li>Superar gargalos hídricos e atrair/reter capital humano qualificado no interior.</li>
+    <li>Traduzir ciência em adoção efetiva no campo, via ATER (EMATER-RN / EMATER-PB / EMPAER).</li>
+  </ul>
+</section>
+
+<!-- ===================== 10 SWOT ===================== -->
+<section id="s10">
+  <div class="sec-head"><div class="sec-num">10</div><h2>SWOT, Riscos, Oportunidades e Desafios</h2><span class="tag">Risco</span></div>
+  <p>Análise crítica da UMIPI sediada na UFERSA/Mossoró, sob liderança compartilhada Embrapa Mandioca e Fruticultura + Embrapa Agroindústria Tropical.</p>
+  <div class="swot">
+    <div class="s"><h4>Forças</h4><ul>
+      <li>Sede na UFERSA — universidade especializada no semiárido.</li>
+      <li>Localização no maior polo de melão/melancia do Brasil.</li>
+      <li>Liderança Embrapa de excelência em fruticultura tropical e mandioca/banana.</li>
+      <li>Ecossistema exportador maduro (Famosa, Favorita, Crop).</li>
+      <li>Base de dados robusta (IBGE) e ITE aplicável.</li>
+    </ul></div>
+    <div class="w"><h4>Fraquezas</h4><ul>
+      <li>Liderança Embrapa sediada fora do RN (BA e CE) — distância gerencial.</li>
+      <li>Déficit hídrico estrutural e dependência de perímetros irrigados.</li>
+      <li>Baixa escolaridade média e informalidade da mão de obra.</li>
+      <li>Saneamento e armazenagem deficientes.</li>
+      <li>Fragilidade financeira de parte da agricultura familiar.</li>
+    </ul></div>
+    <div class="o"><h4>Oportunidades</h4><ul>
+      <li>Demanda global por frutas tropicais certificadas.</li>
+      <li>Bioeconomia da Caatinga (umbu, mangaba, carnaúba, caju).</li>
+      <li>Expansão da caprinovinocultura e do pescado nacional.</li>
+      <li>Recursos de FNE/BNB, MAPA, MDA, Finep/CNPq.</li>
+      <li>Transbordamento para a Paraíba (Sertão, Cariri, Brejo).</li>
+    </ul></div>
+    <div class="t"><h4>Ameaças</h4><ul>
+      <li>Eventos climáticos extremos (secas, El Niño).</li>
+      <li>Crises sanitárias (vírus em camarão, pragas em fruteiras).</li>
+      <li>Barreiras fitossanitárias e câmbio nas exportações.</li>
+      <li>Concorrência de outros polos (Vale do São Francisco, CE).</li>
+      <li>Descontinuidade político-orçamentária.</li>
+    </ul></div>
+  </div>
+  <h3>Matriz de Riscos × Mitigação</h3>
+  <table>
+    <tr><th>Risco</th><th>Prob.</th><th>Impacto</th><th>Mitigação</th></tr>
+    <tr><td>Escassez hídrica</td><td>Alta</td><td>Alto</td><td>PD&I em irrigação de precisão, reúso e dessalinização.</td></tr>
+    <tr><td>Distância da liderança (BA/CE)</td><td>Média</td><td>Médio</td><td>Coordenação executiva local na UFERSA; reuniões periódicas com a DEPD; metas claras.</td></tr>
+    <tr><td>Crise sanitária (camarão/fruteiras)</td><td>Média</td><td>Alto</td><td>Vigilância, biossegurança e parceria com defesa agropecuária.</td></tr>
+    <tr><td>Descontinuidade orçamentária</td><td>Média</td><td>Alto</td><td>Diversificação de fontes (FNE, Finep, privado, Sistema S, fundação de apoio).</td></tr>
+    <tr><td>Baixa adoção pela agric. familiar</td><td>Média</td><td>Médio</td><td>ATER intensiva, unidades demonstrativas e dias de campo.</td></tr>
+  </table>
+</section>
+
+<!-- ===================== 11 PARCERIAS ===================== -->
+<section id="s11">
+  <div class="sec-head"><div class="sec-num">11</div><h2>Modelo de Parcerias Multinível</h2><span class="tag">Rede</span></div>
+  <p>Os parceiros devem ter representação local/regional/estadual no escopo da UMIPI, atuação direta no setor agropecuário/agroindustrial e reconhecida atuação técnica — requisitos da Norma DD nº 11 (seção 7.3).</p>
+  <table>
+    <tr><th>Nível</th><th>Instituições</th><th>Papel</th></tr>
+    <tr><td><strong>Federal</strong></td><td>MAPA, MDA, Min. da Pesca e Aquicultura, DNOCS, Finep, CNPq, BNB (FNE)</td><td>Financiamento, política agrícola, defesa, infraestrutura hídrica, crédito.</td></tr>
+    <tr><td><strong>Estadual</strong></td><td>EMPARN, EMATER-RN, SAPE/RN, UFERSA, EMPAER-PB, EMATER-PB, Governos RN/PB</td><td>Pesquisa adaptativa, ATER, difusão tecnológica, articulação territorial.</td></tr>
+    <tr><td><strong>Privado</strong></td><td>Agrícola Famosa, Favorita, Crop Agrícola, cooperativas, carcinicultores</td><td>Co-financiamento, campos experimentais, escala, validação de mercado.</td></tr>
+    <tr><td><strong>Ensino e Pesquisa</strong></td><td>UFERSA, UFRN, UFPB, UFCG, IFRN, IFPB</td><td>Pós-graduação, laboratórios, formação de pesquisadores.</td></tr>
+    <tr><td><strong>Sistema S</strong></td><td>SEBRAE, SENAR, SENAI</td><td>Capacitação, gestão rural, empreendedorismo, qualificação.</td></tr>
+    <tr><td><strong>ONGs / Sociedade civil</strong></td><td>Associações de produtores, ASA</td><td>Inclusão produtiva, tecnologias sociais de convivência com o semiárido.</td></tr>
+    <tr><td><strong>Startups (AgTechs)</strong></td><td>Ecossistema de inovação</td><td>Soluções digitais, sensoriamento, rastreabilidade, mercados.</td></tr>
+    <tr><td><strong>Produtores rurais</strong></td><td>Familiares e empresariais</td><td>Beneficiários e co-criadores; unidades de referência e validação.</td></tr>
+  </table>
+</section>
+
+<!-- ===================== 12 GOVERNANÇA ===================== -->
+<section id="s12">
+  <div class="sec-head"><div class="sec-num">12</div><h2>Governança e Modelo Operacional</h2><span class="tag">Conforme Norma DD nº 11</span></div>
+
+  <div class="box box-board"><strong>Princípio normativo.</strong> A UMIPI não é unidade organizacional da Embrapa nem possui personalidade jurídica. É formalizada por <strong>Acordo de Parceria</strong> e gerida por <strong>Comitê Gestor</strong> apoiado por <strong>Comitê Técnico</strong>, com <strong>Unidade líder</strong> da Embrapa e coordenação corporativa da <strong>DEPD (Diretoria de Pesquisa e Desenvolvimento)</strong>. Não há transferência de recursos orçamentários entre parceiros.</div>
+
+  <h3>12.1 Estrutura de governança (aderente à Norma)</h3>
+  <table>
+    <tr><th>Instância</th><th>Composição</th><th>Atribuições</th></tr>
+    <tr><td><strong>Diretoria-Executiva (DE)</strong></td><td>Embrapa</td><td>Delibera sobre criação, continuidade, encerramento ou rescisão; ato decisório publicado em BCA.</td></tr>
+    <tr><td><strong>DEPD (Diretoria de Pesquisa e Desenvolvimento)</strong></td><td>Embrapa</td><td>Análise de admissibilidade técnica/finalística, parecer de recomendação, indicação da Unidade líder, gestão corporativa e monitoramento por indicadores.</td></tr>
+    <tr><td><strong>Unidade Líder</strong></td><td>UD da Embrapa (co-liderança Mandioca e Fruticultura / Agroindústria Tropical)</td><td>Instrução processual, negociação, Acordo de Parceria, registro no SAIC, regimento (até 120 dias), gestão de pessoas e relatórios à DEPD.</td></tr>
+    <tr><td><strong>Comitê Gestor</strong></td><td>1 membro de cada instituição (cargos diretivos/executivos) + suplentes</td><td>Planejamento e monitoramento dos projetos; identificação de temas e de editais; decisões sobre recursos e bens.</td></tr>
+    <tr><td><strong>Comitê Técnico</strong></td><td>≥1 empregado de cada parceiro atuando na UMIPI</td><td>Execução e monitoramento dos projetos, notas técnicas e relatórios ao Comitê Gestor.</td></tr>
+    <tr><td><strong>Conselho Consultivo*</strong></td><td>Setor privado, Sistema S, ONGs, produtores</td><td>Demanda tecnológica, validação e priorização (instância consultiva complementar).</td></tr>
+    <caption>*Instância consultiva opcional, sem prejuízo da estrutura normativa obrigatória.</caption>
+  </table>
+
+  <h3>12.2 Fluxo de implementação (Norma DD nº 11)</h3>
+  <div class="fluxo">
+    <div class="et"><b>1. Proposição</b><span>UD proponente → DEPD, via SEI, com Formulário (Anexo I).</span></div>
+    <div class="et"><b>2. Admissibilidade</b><span>DEPD analisa e emite parecer técnico de recomendação.</span></div>
+    <div class="et"><b>3. Aprovação</b><span>DE delibera; ato publicado em BCA (objetivo, base física, Unidade líder).</span></div>
+    <div class="et"><b>4. Acordo</b><span>Unidade líder negocia e celebra o Acordo de Parceria; registro no SAIC e DOU.</span></div>
+    <div class="et"><b>5. Regimento</b><span>Elaboração em até 120 dias; constituição dos Comitês.</span></div>
+    <div class="et"><b>6. Operação</b><span>Projetos no SEG; captação por editais; monitoramento pela DEPD.</span></div>
+  </div>
+
+  <h3>12.3 Modelo operacional</h3>
+  <ul>
+    <li>Operação <strong>em rede e economia colaborativa</strong>, com baixo custo de capital — uso da infraestrutura instalada da UFERSA e de campos experimentais dos parceiros.</li>
+    <li>Base física <strong>externa à Embrapa</strong> (UFERSA), com parceiro responsável por instalações, materiais e custeio de rotina, conforme o instrumento jurídico.</li>
+    <li>Gestão por <strong>projetos com KPIs</strong>: produtividade, renda, uso da água, adoção tecnológica e nº de produtores atendidos.</li>
+    <li>Captação por <strong>fontes nacionais/internacionais, públicas/privadas</strong>, podendo ser geridos por Fundação de Apoio (Lei 8.958/1994).</li>
+    <li><strong>Plataforma de ITE</strong> como espinha dorsal de monitoramento e apoio à decisão.</li>
+  </ul>
+</section>
+
+<!-- ===================== 13 CIDADES ===================== -->
+<section id="s13">
+  <div class="sec-head"><div class="sec-num">13</div><h2>Perfil Ambiental, Social e Econômico</h2><span class="tag">Contexto</span></div>
+  <h3>13.1 Estados</h3>
+  <table>
+    <tr><th>Indicador</th><th>Rio Grande do Norte</th><th>Paraíba</th></tr>
+    <tr><td>População (2022)</td><td>3.302.729</td><td>3.974.687</td></tr>
+    <tr><td>IDH (2021)</td><td>0,728</td><td>0,698</td></tr>
+    <tr><td>Renda domiciliar per capita (2025)</td><td>R$ 1.819</td><td>R$ 1.543</td></tr>
+    <tr><td>Bioma predominante</td><td>Caatinga</td><td>Caatinga</td></tr>
+    <tr><td>Área (km²)</td><td>52.809,6</td><td>56.467,2</td></tr>
+    <tr><td>Capital</td><td>Natal</td><td>João Pessoa</td></tr>
+  </table>
+  <h3>13.2 Cidades-destaque (Oeste Potiguar)</h3>
+  <table>
+    <tr><th>Indicador</th><th>Mossoró</th><th>Apodi</th><th>Baraúna</th></tr>
+    <tr><td>População (2022)</td><td>264.577</td><td>36.093</td><td>26.913</td></tr>
+    <tr><td>População estimada (2025)</td><td>278.587</td><td>37.486</td><td>28.415</td></tr>
+    <tr><td>PIB per capita (2023)</td><td>R$ 39.019,51</td><td>R$ 26.239,53</td><td>R$ 36.828,45</td></tr>
+    <tr><td>PIB total 2023 (R$ mil)</td><td>10.323.666</td><td>941.920</td><td>991.164</td></tr>
+    <tr><td>IDHM (2010)</td><td>0,720</td><td>0,639</td><td>0,574</td></tr>
+    <tr><td>Salário médio formal (SM)</td><td>2,1</td><td>1,8</td><td>2,0</td></tr>
+    <tr><td>Densidade demográfica</td><td>126,03 hab/km²</td><td>22,52 hab/km²</td><td>32,59 hab/km²</td></tr>
+    <tr><td>Esgotamento sanitário adequado</td><td>52,96%</td><td>4,46%</td><td>1,17%</td></tr>
+    <tr><td>Região de influência</td><td>Capital Regional C</td><td>Centro Local</td><td>Centro Local</td></tr>
+  </table>
+  <div class="box box-azul">
+    <strong>Mossoró:</strong> 2ª maior cidade do RN; maior produtora nacional de sal e de petróleo em terra; polo de fruticultura irrigada de exportação (Agrícola Famosa) e de carcinicultura; PIB de R$ 10,3 bi — núcleo natural da UMIPI.<br>
+    <strong>Apodi:</strong> Chapada do Apodi e Perímetro Irrigado Santa Cruz; maior rebanho caprino/ovino do recorte; fruticultura de exportação em expansão.<br>
+    <strong>Baraúna:</strong> polo de melão e melancia de alta produtividade, fortemente integrado ao cluster de Mossoró.
+  </div>
+  <p class="fonte">Fonte: IBGE Cidades@ (Panoramas) e planilhas PIB Cidades RN/PB.</p>
+</section>
+
+<!-- ===================== 14 MAPA ===================== -->
+<section id="s14">
+  <div class="sec-head"><div class="sec-num">14</div><h2>Mapa de Localização — Núcleo da UMIPI</h2><span class="tag">Território</span></div>
+  <p>As três cidades formam um conjunto contíguo no oeste do Rio Grande do Norte, junto à divisa com o Ceará, na região da Chapada do Apodi — Baraúna (verde), Mossoró (azul) e Apodi (rosa), conforme o mapa de referência abaixo.</p>
+  <div class="mapa">
+    <img src="mapa.PNG" alt="Mapa do Rio Grande do Norte e Paraíba com destaque para Baraúna, Mossoró e Apodi">
+    <div class="cap">Mapa do Rio Grande do Norte e Paraíba, com destaque para os municípios de Baraúna, Mossoró e Apodi (Oeste Potiguar). Biomas: Caatinga (interior) e Mata Atlântica (faixa litorânea).</div>
+  </div>
+</section>
+
+<!-- ===================== 15 RECOMENDAÇÕES ===================== -->
+<section id="s15">
+  <div class="sec-head"><div class="sec-num">15</div><h2>Tendências e Recomendações</h2><span class="tag">Deliberação</span></div>
+  <h3>Tendências</h3>
+  <ul>
+    <li><strong>Intensificação tecnológica e digitalização</strong> da fruticultura irrigada (precisão, sensoriamento, rastreabilidade).</li>
+    <li><strong>Pressão hídrica crescente</strong> exigindo reúso, dessalinização e eficiência de irrigação.</li>
+    <li><strong>Valorização da sociobiodiversidade da Caatinga</strong> e da bioeconomia.</li>
+    <li><strong>Expansão da caprinovinocultura</strong> com agregação de valor.</li>
+    <li><strong>Sustentabilidade e descarbonização</strong> como requisitos de acesso a mercados premium.</li>
+    <li><strong>Integração de dados territoriais</strong> (ITE) para decisão e políticas.</li>
+  </ul>
+  <h3>Recomendações ao Board</h3>
+  <ol class="li">
+    <li>Autorizar a <strong>proposição formal da UMIPI à DEPD</strong>, via SEI, com o Formulário do Anexo I da Norma DD nº 11.</li>
+    <li>Indicar a <strong>Unidade líder</strong> e constituir Comitê Gestor e Comitê Técnico.</li>
+    <li>Celebrar <strong>Acordo de Parceria multinível</strong> (federal, estadual, privado, academia, Sistema S, ONGs, produtores) com base física na UFERSA.</li>
+    <li>Aprovar <strong>carteira inicial de 5–7 projetos âncora</strong> com KPIs de produtividade, renda, água e inclusão.</li>
+    <li>Implantar a <strong>Plataforma de ITE</strong> (observatório RN/PB) no primeiro ano.</li>
+    <li>Priorizar <strong>resiliência hídrica</strong> e <strong>inclusão da agricultura familiar</strong> como eixos transversais.</li>
+    <li>Estabelecer <strong>unidades de referência</strong> em Apodi, Mossoró e Baraúna, com transbordamento para o semiárido paraibano.</li>
+    <li>Garantir <strong>diversificação de fontes de financiamento</strong> e plano de sustentabilidade quadrienal.</li>
+  </ol>
+  <div class="box box-board">
+    <strong>Conclusão.</strong> A UMIPI em Mossoró é intervenção estratégica de alta aderência, baixa exposição financeira e elevado retorno social. Ao articular fruticultura tropical, caprinovinocultura, mandiocultura, carcinicultura e bioeconomia da Caatinga, tem potencial para elevar produtividade, renda e sustentabilidade, com forte impacto inclusivo, consolidando o oeste potiguar como referência nacional em inovação no semiárido — em plena conformidade com a Norma de UMIPIs da Embrapa.
+  </div>
+</section>
+
+<!-- ===================== 16 ANEXOS ===================== -->
+<section id="s16">
+  <div class="sec-head"><div class="sec-num">16</div><h2>Anexos — Tabelas e Dados (Expandir/Recolher)</h2><span class="tag">Dados-fonte</span></div>
+  <p>Consolidação dos microdados das <strong>18 planilhas-fonte</strong> anexas (IBGE — PAM, PPM, PEVS, Cidades@ e PIB). Cada planilha está representada nos blocos abaixo:</p>
+  <table>
+    <tr><th>Dimensão</th><th>Planilhas estaduais</th><th>Planilhas municipais</th><th>Bloco</th></tr>
+    <tr><td><strong>Agrícola</strong></td><td>Agrícola_RN · Agrícola_PB</td><td>Agrícola_Cidades_RN · Agrícola_Cidades_PB</td><td>A1 · A2 · A3</td></tr>
+    <tr><td><strong>Pecuária</strong></td><td>Pecuária_RN · Pecuária_PB</td><td>Pecuária_Cidades_RN · Pecuária_Cidades_PB</td><td>A4</td></tr>
+    <tr><td><strong>Aquicultura</strong></td><td>Aquicultura_RN · Aquicultura_PB</td><td>Aquicultura_Cidades_RN · Aquicultura_Cidades_PB</td><td>A5</td></tr>
+    <tr><td><strong>Extrativismo</strong></td><td>Extrativismo_RN · Extrativismo_PB</td><td>Extrativismo_Cidades_RN · Extrativismo_Cidades_PB</td><td>A6</td></tr>
+    <tr><td><strong>PIB</strong></td><td>—</td><td>PIB_Cidades_RN · PIB_Cidades_PB</td><td>A7</td></tr>
+    <caption>As listagens ampliadas dos maiores municípios produtores (top 10 por produto) constam no bloco A8.</caption>
+  </table>
+
+  <details>
+    <summary>A1 · Agrícola — Totais Estaduais Rio Grande do Norte e Paraíba (Área / Produção / Valor)</summary>
+    <div class="cont">
+      <h4>Rio Grande do Norte</h4>
+      <table>
+        <tr><th>Variável</th><th>Total</th><th>Banana</th><th>Castanha caju</th><th>Cana</th><th>Mandioca</th><th>Melancia</th><th>Melão</th><th>Milho</th><th>Feijão</th><th>Coco*</th></tr>
+        <tr><td>Área (ha)</td><td>305.665</td><td>8.383</td><td>62.128</td><td>64.398</td><td>24.832</td><td>6.762</td><td>18.930</td><td>46.837</td><td>34.952</td><td>18.289</td></tr>
+        <tr><td>Produção (t)</td><td>—</td><td>214.472</td><td>20.546</td><td>3.858.316</td><td>276.245</td><td>142.614</td><td>505.212</td><td>22.696</td><td>13.701</td><td>164.555</td></tr>
+        <tr><td>Valor (mil R$)</td><td>3.566.419</td><td>473.046</td><td>95.655</td><td>633.318</td><td>248.107</td><td>130.389</td><td>858.141</td><td>31.803</td><td>86.681</td><td>215.043</td></tr>
+      </table>
+      <h4>Paraíba</h4>
+      <table>
+        <tr><th>Variável</th><th>Total</th><th>Banana</th><th>Abacaxi*</th><th>Cana</th><th>Mandioca</th><th>Coco*</th><th>Milho</th><th>Feijão</th><th>Batata-doce</th></tr>
+        <tr><td>Área (ha)</td><td>362.620</td><td>10.812</td><td>9.419</td><td>110.961</td><td>16.121</td><td>7.172</td><td>96.179</td><td>78.451</td><td>5.549</td></tr>
+        <tr><td>Produção (t)</td><td>—</td><td>145.055</td><td>300.903</td><td>7.181.745</td><td>164.972</td><td>83.532</td><td>47.842</td><td>19.119</td><td>53.115</td></tr>
+        <tr><td>Valor (mil R$)</td><td>3.025.585</td><td>259.101</td><td>671.809</td><td>1.216.614</td><td>160.977</td><td>83.175</td><td>62.250</td><td>88.506</td><td>118.105</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>A2 · Agrícola — Núcleo RN (Apodi/Mossoró/Baraúna) e maiores municípios</summary>
+    <div class="cont">
+      <table>
+        <tr><th>Município</th><th>Total</th><th>Banana</th><th>Castanha caju</th><th>Coco*</th><th>Feijão</th><th>Mandioca</th><th>Melancia</th><th>Melão</th><th>Milho</th></tr>
+        <tr><td>Apodi</td><td>17.148</td><td>500</td><td>11.000</td><td>40</td><td>250</td><td>15</td><td>865</td><td>2.000</td><td>2.000</td></tr>
+        <tr><td>Mossoró</td><td>17.249</td><td>15</td><td>1.850</td><td>30</td><td>3.200</td><td>50</td><td>2.500</td><td>8.300</td><td>1.000</td></tr>
+        <tr><td>Baraúna</td><td>7.396</td><td>400</td><td>200</td><td>6</td><td>300</td><td>80</td><td>350</td><td>3.100</td><td>1.500</td></tr>
+      </table>
+      <table>
+        <tr><th>Município</th><th>Total (ha)</th><th>Destaque</th></tr>
+        <tr><td>Serra do Mel</td><td>27.200</td><td>Castanha caju 25.000 ha</td></tr>
+        <tr><td>Canguaretama</td><td>16.560</td><td>Cana 16.000 ha</td></tr>
+        <tr><td>Touros</td><td>13.966</td><td>Coco, abacaxi, batata-doce</td></tr>
+        <tr><td>Baía Formosa</td><td>12.831</td><td>Cana 12.000 ha</td></tr>
+        <tr><td>Cerro Corá</td><td>9.138</td><td>Castanha caju, maracujá</td></tr>
+        <tr><td>Ceará-Mirim</td><td>8.380</td><td>Cana 3.000, coco 2.400 ha</td></tr>
+        <tr><td>Arês</td><td>8.171</td><td>Cana 7.800 ha</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>A3 · Agrícola — Municípios PB de destaque (área total, ha)</summary>
+    <div class="cont">
+      <table>
+        <tr><th>Município</th><th>Total (ha)</th><th>Destaques</th></tr>
+        <tr><td>Pedras de Fogo</td><td>22.144</td><td>Cana 17.600; abacaxi 1.900</td></tr>
+        <tr><td>Santa Rita</td><td>17.807</td><td>Cana 14.700; abacaxi 900; coco 1.300</td></tr>
+        <tr><td>Mamanguape</td><td>11.289</td><td>Cana 9.750; batata-doce 375</td></tr>
+        <tr><td>Sapé</td><td>10.982</td><td>Cana 10.200; abacaxi 180</td></tr>
+        <tr><td>Rio Tinto</td><td>10.205</td><td>Cana 9.800; coco 110</td></tr>
+        <tr><td>Alagoa Grande</td><td>7.196</td><td>Cana 1.650; milho 2.500</td></tr>
+        <tr><td>Cruz do Espírito Santo</td><td>6.827</td><td>Cana 6.350</td></tr>
+        <tr><td>Itapororoca</td><td>5.790</td><td>Cana 3.000; abacaxi 2.000</td></tr>
+        <tr><td>Alagoa Nova</td><td>5.776</td><td>Banana 2.100; cana 1.200</td></tr>
+        <tr><td>São João do Rio do Peixe</td><td>5.548</td><td>Milho 5.000</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>A4 · Pecuária — Totais Estaduais e municípios de destaque</summary>
+    <div class="cont">
+      <table>
+        <tr><th>Estado</th><th>Bovino</th><th>Bubalino</th><th>Equino</th><th>Suíno total</th><th>Caprino</th><th>Ovino</th><th>Galináceos total</th><th>Codornas</th></tr>
+        <tr><td>RN</td><td>1.376.932</td><td>1.664</td><td>98.122</td><td>534.452</td><td>669.004</td><td>792.256</td><td>12.709.325</td><td>137.455</td></tr>
+        <tr><td>PB</td><td>1.472.825</td><td>761</td><td>77.802</td><td>317.171</td><td>848.852</td><td>842.035</td><td>14.527.801</td><td>197.842</td></tr>
+      </table>
+      <table>
+        <tr><th>Município RN</th><th>Destaque</th><th>Município PB</th><th>Destaque</th></tr>
+        <tr><td>Santa Cruz</td><td>Galináceos 2.340.000</td><td>Pedras de Fogo</td><td>Galináceos 1.132.509</td></tr>
+        <tr><td>Mossoró</td><td>Galináceos 2.000.000</td><td>Pocinhos</td><td>Galináceos 1.250.000</td></tr>
+        <tr><td>Macaíba</td><td>Galináceos 1.200.000</td><td>Guarabira</td><td>Galináceos 1.120.000</td></tr>
+        <tr><td>São José de Mipibu</td><td>Galináceos 1.082.671</td><td>Mamanguape</td><td>Galináceos 936.878</td></tr>
+        <tr><td>Santana do Matos</td><td>Bovino 33.000; caprino 50.000</td><td>Monteiro</td><td>Caprino 40.123; ovino 29.654</td></tr>
+        <tr><td>Caicó</td><td>Bovino 48.922</td><td>Sumé</td><td>Caprino 31.636; ovino 32.310</td></tr>
+        <tr><td>Pedro Avelino</td><td>Caprino 34.850; ovino 24.100</td><td>Pombal</td><td>Bovino 29.280; ovino 23.500</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>A5 · Aquicultura — Totais Estaduais e municípios de destaque</summary>
+    <div class="cont">
+      <table>
+        <tr><th>Produto</th><th>RN</th><th>PB</th></tr>
+        <tr><td>Camarão (kg)</td><td>31.620.945</td><td>8.869.300</td></tr>
+        <tr><td>Tilápia (kg)</td><td>2.297.962</td><td>4.249.395</td></tr>
+        <tr><td>Curimatã (kg)</td><td>204.554</td><td>300</td></tr>
+        <tr><td>Tambaqui (kg)</td><td>221.670</td><td>12.856</td></tr>
+        <tr><td>Larvas/pós-larvas camarão (milheiros)</td><td>10.730.818</td><td>185.400</td></tr>
+        <tr><td>Ostras/vieiras/mexilhões (kg)</td><td>125.000</td><td>23.000</td></tr>
+        <tr><td>Valor total (mil R$)</td><td>888.662</td><td>245.613</td></tr>
+      </table>
+      <table>
+        <tr><th>Município RN</th><th>Produção</th><th>Município PB</th><th>Produção</th></tr>
+        <tr><td>Pendências</td><td>Camarão 9.608.000 kg</td><td>João Pessoa</td><td>Camarão 1.800.000 kg</td></tr>
+        <tr><td>Arês</td><td>Camarão 3.500.000 kg</td><td>Mari</td><td>Tilápia 1.000.000 kg</td></tr>
+        <tr><td>Canguaretama</td><td>Camarão 3.200.000 kg</td><td>S. Miguel de Taipu</td><td>Camarão 1.000.000 kg</td></tr>
+        <tr><td>Guamaré</td><td>Camarão 2.299.122 kg</td><td>Mogeiro</td><td>Camarão 880.000 kg</td></tr>
+        <tr><td>Mossoró</td><td>Camarão 2.200.000 kg</td><td>Bananeiras</td><td>Tilápia 825.000 kg</td></tr>
+        <tr><td>Nísia Floresta</td><td>Tilápia 800.000 kg</td><td>Salgado S. Félix</td><td>Camarão 660.000 kg</td></tr>
+        <tr><td>Apodi</td><td>Tilápia 38.000; camarão 80.000 kg</td><td>Itabaiana</td><td>Camarão 648.000 kg</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>A6 · Extrativismo — Totais Estaduais e municípios de destaque</summary>
+    <div class="cont">
+      <table>
+        <tr><th>Produto</th><th>RN</th><th>PB</th></tr>
+        <tr><td>Alimentícios total (t)</td><td>1.436</td><td>4.012</td></tr>
+        <tr><td>Castanha-de-caju (t)</td><td>65</td><td>310</td></tr>
+        <tr><td>Mangaba (t)</td><td>641</td><td>914</td></tr>
+        <tr><td>Umbu (t)</td><td>692</td><td>2.302</td></tr>
+        <tr><td>Carnaúba pó (t)</td><td>420</td><td>15</td></tr>
+        <tr><td>Carvão vegetal (t)</td><td>3.334</td><td>984</td></tr>
+        <tr><td>Lenha (m³)</td><td>1.124.485</td><td>713.824</td></tr>
+        <tr><td>Valor total (mil R$)</td><td>58.574</td><td>29.849</td></tr>
+      </table>
+      <table>
+        <tr><th>Município RN</th><th>Destaque</th><th>Município PB</th><th>Destaque</th></tr>
+        <tr><td>Nísia Floresta</td><td>Mangaba 526 t</td><td>Rio Tinto</td><td>Mangaba 305 t</td></tr>
+        <tr><td>São Miguel do Gostoso</td><td>Umbu 185 t</td><td>Baía da Traição</td><td>Mangaba 285 t</td></tr>
+        <tr><td>Apodi</td><td>Carnaúba pó 80 t</td><td>Juazeirinho</td><td>Umbu 450 t</td></tr>
+        <tr><td>Caraúbas</td><td>Lenha 230.000 m³</td><td>São Vicente do Seridó</td><td>Umbu 422 t</td></tr>
+        <tr><td>Alexandria</td><td>Lenha 114.000 m³</td><td>S. Domingos do Cariri</td><td>Lenha 31.010 m³</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>A7 · PIB Municipal 2023 (R$ mil) — maiores municípios</summary>
+    <div class="cont">
+      <table>
+        <tr><th>Município RN</th><th>PIB 2023</th><th>Município PB</th><th>PIB 2023</th></tr>
+        <tr><td>Natal</td><td>31.162.043</td><td>João Pessoa</td><td>28.442.131</td></tr>
+        <tr><td>Mossoró</td><td>10.323.666</td><td>Campina Grande</td><td>12.908.743</td></tr>
+        <tr><td>Parnamirim</td><td>7.608.526</td><td>Cabedelo</td><td>4.092.777</td></tr>
+        <tr><td>São Gonçalo do Amarante</td><td>2.588.564</td><td>Santa Rita</td><td>3.163.544</td></tr>
+        <tr><td>Guamaré</td><td>2.581.922</td><td>Alhandra</td><td>3.148.252</td></tr>
+        <tr><td>Macaíba</td><td>2.455.739</td><td>Patos</td><td>2.555.214</td></tr>
+        <tr><td>Açu</td><td>2.170.177</td><td>Bayeux</td><td>1.899.000</td></tr>
+        <tr><td>Caicó</td><td>1.735.797</td><td>Cajazeiras</td><td>1.808.447</td></tr>
+        <tr><td>Baraúna</td><td>991.164</td><td>Sousa</td><td>1.714.770</td></tr>
+        <tr><td>Apodi</td><td>941.920</td><td>Guarabira</td><td>1.489.288</td></tr>
+      </table>
+      <p class="fonte">Listagens completas (todos os municípios) constam nas planilhas PIB Cidades RN/PB anexas.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>A8 · Principais municípios produtores (top 10 por produto) — quatro dimensões</summary>
+    <div class="cont">
+      <h4>Agrícola — Rio Grande do Norte (quantidade produzida, t)</h4>
+      <table>
+        <tr><th>Cultura</th><th>10 maiores municípios produtores (município · produção)</th></tr>
+        <tr><td><strong>Melão</strong></td><td>Mossoró 218.373 · Baraúna 93.000 · Tibau 75.645 · Apodi 61.502 · Upanema 17.000 · Gov. Dix-Sept Rosado 11.871 · Galinhos 9.325 · Macau 8.400 · Afonso Bezerra 4.566 · Alto do Rodrigues 2.050</td></tr>
+        <tr><td><strong>Melancia</strong></td><td>Mossoró 70.000 · Apodi 21.654 · Upanema 14.360 · Baraúna 10.280 · Afonso Bezerra 5.701 · Serra do Mel 4.500 · Açu 1.744 · Porto do Mangue 1.658 · Gov. Dix-Sept Rosado 1.406 · Alto do Rodrigues 1.352</td></tr>
+        <tr><td><strong>Cana-de-açúcar</strong></td><td>Canguaretama 892.480 · Baía Formosa 660.000 · Arês 463.382 · Goianinha 388.719 · Taipu 280.000 · Ceará-Mirim 240.000 · São José de Mipibu 235.067 · Pureza 146.000 · Pedro Velho 144.000 · Macaíba 97.500</td></tr>
+        <tr><td><strong>Banana</strong></td><td>Alto do Rodrigues 40.960 · Rio do Fogo 25.650 · Ipanguaçu 25.615 · Ceará-Mirim 23.000 · Touros 21.840 · Apodi 13.859 · Pureza 11.667 · Baraúna 9.388 · Açu 8.855 · Jandaíra 4.651</td></tr>
+        <tr><td><strong>Mandioca</strong></td><td>Vera Cruz 51.200 · Pureza 28.024 · Touros 26.744 · Macaíba 20.400 · Santo Antônio 19.112 · Cerro Corá 17.000 · Bodó 12.200 · São Miguel do Gostoso 9.950 · Poço Branco 9.450 · Ielmo Marinho 6.300</td></tr>
+        <tr><td><strong>Castanha de caju</strong></td><td>Serra do Mel 7.000 · Apodi 3.300 · Severiano Melo 1.928 · Cerro Corá 1.500 · Bodó 1.000 · Porto do Mangue 738 · Mossoró 546 · Tenente Laurentino Cruz 495 · Lagoa Nova 400 · Areia Branca 363</td></tr>
+      </table>
+      <h4>Agrícola — Paraíba (quantidade produzida, t)</h4>
+      <table>
+        <tr><th>Cultura</th><th>10 maiores municípios produtores (município · produção)</th></tr>
+        <tr><td><strong>Cana-de-açúcar</strong></td><td>Pedras de Fogo 1.144.000 · Santa Rita 955.500 · Sapé 663.000 · Rio Tinto 637.000 · Mamanguape 633.750 · Cruz do Espírito Santo 412.750 · Mataraca 258.700 · Juripiranga 250.250 · Caaporã 247.000 · Marcação 227.500</td></tr>
+        <tr><td><strong>Abacaxi*</strong></td><td>Pedras de Fogo 68.400 · Itapororoca 60.000 · Araçagi 48.000 · Santa Rita 31.500 · São Miguel de Taipu 13.300 · Lagoa de Dentro 12.900 · Curral de Cima 10.500 · Cuité de Mamanguape 10.500 · Sertãozinho 7.650 · Guarabira 6.600</td></tr>
+        <tr><td><strong>Banana</strong></td><td>Pilões 23.100 · Bananeiras 21.000 · Alagoa Nova 21.000 · Areia 10.800 · Borborema 9.800 · Natuba 8.680 · Sousa 7.260 · Serraria 4.480 · Pilõezinhos 4.060 · Mamanguape 3.650</td></tr>
+        <tr><td><strong>Mandioca</strong></td><td>Mari 21.200 · Pitimbu 16.014 · Pedras de Fogo 12.600 · Alhandra 7.320 · Santa Rita 7.000 · Puxinanã 6.300 · Araçagi 5.200 · Bananeiras 4.410 · Mogeiro 4.260 · Conde 4.100</td></tr>
+        <tr><td><strong>Coco-da-baía*</strong></td><td>Lucena 21.422 · Santa Rita 18.200 · Pitimbu 10.600 · Mamanguape 6.480 · Sousa 5.760 · Conde 2.800 · Baía da Traição 1.860 · Mataraca 1.610 · Aparecida 1.600 · Alhandra 1.400</td></tr>
+        <tr><td><strong>Milho</strong></td><td>Araruna 2.400 · Sousa 2.352 · Itatuba 1.600 · Tacima 1.500 · São João do Rio do Peixe 1.200 · Alagoa Grande 1.000 · Teixeira 924 · Princesa Isabel 900 · Tavares 875 · Coremas 810</td></tr>
+        <caption>*Abacaxi e coco em mil frutos.</caption>
+      </table>
+      <h4>Pecuária — Rio Grande do Norte (efetivo, cabeças)</h4>
+      <table>
+        <tr><th>Rebanho</th><th>10 maiores municípios (município · efetivo)</th></tr>
+        <tr><td><strong>Bovino</strong></td><td>Caicó 48.922 · Santana do Matos 33.000 · Nova Cruz 33.000 · Santo Antônio 32.700 · Jucurutu 32.130 · Campo Grande 27.255 · Macaíba 27.200 · Mossoró 24.000 · Apodi 23.000 · Ceará-Mirim 22.970</td></tr>
+        <tr><td><strong>Caprino</strong></td><td>Apodi 50.500 · Santana do Matos 50.000 · Pedro Avelino 34.850 · Mossoró 34.500 · Açu 29.786 · Caraúbas 26.000 · Gov. Dix-Sept Rosado 22.000 · Lajes 21.248 · Afonso Bezerra 16.325 · São José do Campestre 16.000</td></tr>
+        <tr><td><strong>Ovino</strong></td><td>Açu 54.571 · Campo Grande 42.005 · Apodi 42.000 · Santana do Matos 40.000 · Messias Targino 25.000 · Pedro Avelino 24.100 · Patu 23.500 · Caraúbas 19.000 · Caicó 18.200 · Mossoró 18.000</td></tr>
+        <tr><td><strong>Galináceos</strong></td><td>Santa Cruz 2.340.000 · Mossoró 2.000.000 · Macaíba 1.200.000 · São José de Mipibu 1.082.671 · Parnamirim 800.000 · Gov. Dix-Sept Rosado 655.000 · Ceará-Mirim 480.000 · Acari 450.010 · São Bento do Trairí 300.100 · Apodi 190.000</td></tr>
+      </table>
+      <h4>Pecuária — Paraíba (efetivo, cabeças)</h4>
+      <table>
+        <tr><th>Rebanho</th><th>10 maiores municípios (município · efetivo)</th></tr>
+        <tr><td><strong>Bovino</strong></td><td>Pombal 29.280 · Sousa 26.887 · Paulista 25.742 · Piancó 20.703 · Monteiro 20.397 · Gurinhém 20.000 · Alagoa Grande 20.000 · Queimadas 18.203 · São José de Espinharas 17.937 · Princesa Isabel 17.236</td></tr>
+        <tr><td><strong>Caprino</strong></td><td>Monteiro 40.123 · Sumé 31.636 · São João do Tigre 30.405 · Serra Branca 30.079 · Barra de São Miguel 30.000 · São Sebastião do Umbuzeiro 26.835 · Soledade 26.100 · Camalaú 23.499 · Caraúbas 23.157 · Cabaceiras 19.000</td></tr>
+        <tr><td><strong>Ovino</strong></td><td>Sumé 32.310 · Monteiro 29.654 · Barra de São Miguel 25.000 · Barra de Santa Rosa 25.000 · Pombal 23.500 · Sousa 22.688 · Soledade 21.080 · Serra Branca 19.719 · Pocinhos 17.400 · São João do Cariri 17.040</td></tr>
+        <tr><td><strong>Galináceos</strong></td><td>Pocinhos 1.250.000 · Pedras de Fogo 1.132.509 · Guarabira 1.120.000 · Mamanguape 936.878 · Soledade 770.000 · Princesa Isabel 749.388 · Esperança 420.000 · Puxinanã 320.000 · Campina Grande 305.000 · Boa Vista 298.000</td></tr>
+      </table>
+      <h4>Aquicultura — Rio Grande do Norte (produção, kg)</h4>
+      <table>
+        <tr><th>Produto</th><th>10 maiores municípios (município · produção)</th></tr>
+        <tr><td><strong>Camarão</strong></td><td>Pendências 9.608.000 · Arês 3.500.000 · Canguaretama 3.200.000 · Sen. Georgino Avelino 2.800.000 · Guamaré 2.299.122 · Mossoró 2.200.000 · Porto do Mangue 960.000 · Macau 901.760 · Galinhos 877.000 · Nísia Floresta 700.000</td></tr>
+        <tr><td><strong>Tilápia</strong></td><td>Nísia Floresta 800.000 · Lagoa de Pedras 295.000 · Sen. Georgino Avelino 230.000 · Canguaretama 125.000 · Caraúbas 72.550 · Timbaúba dos Batistas 70.963 · Goianinha 70.000 · São João do Sabugi 60.000 · Tibau do Sul 58.000 · Pureza 50.000</td></tr>
+      </table>
+      <h4>Aquicultura — Paraíba (produção, kg)</h4>
+      <table>
+        <tr><th>Produto</th><th>10 maiores municípios (município · produção)</th></tr>
+        <tr><td><strong>Camarão</strong></td><td>João Pessoa 1.800.000 · São Miguel de Taipu 1.000.000 · Santa Rita 980.000 · Mogeiro 880.000 · Salgado de São Félix 660.000 · Itabaiana 648.000 · Itatuba 550.000 · Pilar 385.000 · Baía da Traição 250.000 · Caaporã 203.500</td></tr>
+        <tr><td><strong>Tilápia</strong></td><td>Mari 1.000.000 · Bananeiras 825.000 · Riachão do Poço 398.750 · Mamanguape 350.000 · São Miguel de Taipu 350.000 · Borborema 180.000 · Boqueirão 100.000 · Capim 90.000 · Santa Rita 76.000 · Itatuba 64.200</td></tr>
+      </table>
+      <h4>Extrativismo — Rio Grande do Norte</h4>
+      <table>
+        <tr><th>Produto</th><th>10 maiores municípios (município · produção)</th></tr>
+        <tr><td><strong>Umbu (t)</strong></td><td>São Miguel do Gostoso 185 · Pedra Grande 100 · São Bento do Norte 74 · Caiçara do Norte 58 · Jaçanã 45 · Parelhas 33 · Campo Redondo 20 · Jardim do Seridó 18 · Poço Branco 15 · Tenente Laurentino Cruz 10</td></tr>
+        <tr><td><strong>Mangaba (t)</strong></td><td>Nísia Floresta 526 · Pureza 52 · Ceará-Mirim 36 · Maxaranguape 11 · Goianinha 8 · Canguaretama 3 · Rio do Fogo 3 · Arês 1</td></tr>
+        <tr><td><strong>Carnaúba — pó (t)</strong></td><td>Ipanguaçu 88 · Apodi 80 · Upanema 60 · Açu 57 · Felipe Guerra 40 · Mossoró 25 · Paraú 24 · Carnaubais 16 · Triunfo Potiguar 14 · Lagoa de Pedras 5</td></tr>
+        <tr><td><strong>Lenha (m³)</strong></td><td>Caraúbas 230.000 · Alexandria 114.000 · Santa Cruz 104.020 · Guamaré 52.000 · Acari 41.620 · Carnaúba dos Dantas 38.200 · Parelhas 30.000 · Marcelino Vieira 25.000 · Serra de São Bento 20.000 · Cruzeta 17.000</td></tr>
+      </table>
+      <h4>Extrativismo — Paraíba</h4>
+      <table>
+        <tr><th>Produto</th><th>10 maiores municípios (município · produção)</th></tr>
+        <tr><td><strong>Umbu (t)</strong></td><td>Juazeirinho 450 · São Vicente do Seridó 422 · Olivedos 350 · Taperoá 182 · Picuí 90 · Livramento 86 · Barra de Santa Rosa 80 · Assunção 76 · Cubati 70 · Sossêgo 68</td></tr>
+        <tr><td><strong>Mangaba (t)</strong></td><td>Rio Tinto 305 · Baía da Traição 285 · Marcação 180 · Conde 120 · Pitimbu 14 · Lucena 4 · Mataraca 3 · Caaporã 1 · Jacaraú 1 · Pedras de Fogo 1</td></tr>
+        <tr><td><strong>Lenha (m³)</strong></td><td>São Domingos do Cariri 31.010 · Olho d'Água 25.999 · Juazeirinho 25.000 · Taperoá 19.450 · Itaporanga 18.107 · Picuí 17.000 · Alagoa Grande 16.500 · Conceição 14.907 · Boqueirão 14.000 · Cuité 13.000</td></tr>
+        <tr><td><strong>Carvão vegetal (t)</strong></td><td>Emas 61 · Picuí 50 · Coxixola 29 · Cuité 28 · Monteiro 27 · Congo 26 · Barra de Santa Rosa 25 · Sumé 23 · Aroeiras 20 · Camalaú 18</td></tr>
+      </table>
+      <p class="fonte">Fonte: IBGE — PAM, PPM, PEVS e Cidades@ (microdados municipais, 2024). Listagens ordenadas por volume produzido/efetivo.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>A9 · Fontes e completude dos dados</summary>
+    <div class="cont">
+      <p>As tabelas reúnem os microdados das 18 planilhas anexas, apresentando totais estaduais (RN e PB), o núcleo Apodi/Mossoró/Baraúna e os <strong>principais municípios produtores de cada dimensão</strong> (listagens top 10 no bloco A8). Arquivos-fonte:</p>
+      <ul>
+        <li><strong>Agrícola:</strong> Agrícola RN/PB e Agrícola Cidades RN/PB (Área colhida, Produção, Rendimento, Valor).</li>
+        <li><strong>Pecuária:</strong> Pecuária RN/PB e Pecuária Cidades RN/PB.</li>
+        <li><strong>Aquicultura:</strong> Aquicultura RN/PB e Aquicultura Cidades RN/PB (Produção e Valor).</li>
+        <li><strong>Extrativismo:</strong> Extrativismo RN/PB e Extrativismo Cidades RN/PB (Quantidade e Valor).</li>
+        <li><strong>PIB:</strong> PIB Cidades RN/PB · <strong>Panoramas IBGE:</strong> Apodi, Baraúna, Mossoró, RN e PB.</li>
+        <li><strong>Norma:</strong> DD nº 11 — Unidades Mistas de Pesquisa e Inovação (Embrapa, BCA nº 27/2021).</li>
+      </ul>
+      <p class="fonte">Fonte primária: IBGE — PAM, PPM, PEVS e Cidades@. Referência metodológica: Embrapa (ITE e Norma de UMIPIs).</p>
+    </div>
+  </details>
+
+</section>
+
+</div><!-- /conteudo -->
+
+<footer>
+  <p><strong>Nota Técnica Executiva — Implantação de UMIPI no Semiárido (RN/PB)</strong></p>
+  <p>Elaborada com base nos microdados do IBGE (PAM, PPM, PEVS, Cidades@), no Diamante de Porter, na Inteligência Territorial Estratégica da Embrapa e na Norma de Unidades Mistas de Pesquisa e Inovação (DD nº 11/2021).</p>
+  <p>Sede proposta: UFERSA — Mossoró/RN · Liderança compartilhada: Embrapa Mandioca e Fruticultura (Cruz das Almas/BA) &amp; Embrapa Agroindústria Tropical (Fortaleza/CE) · Coordenação corporativa: DEPD · Documento analítico-propositivo para deliberação do Board.</p>
+</footer>
+
+</div><!-- /doc -->
+</body>
+</html>
